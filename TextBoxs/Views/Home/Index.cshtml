@@ -1,0 +1,27 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+<html>
+<head>
+    <script src="~/Content/js/jquery-1.11.1.min.js"></script>
+    <script src="~/Content/js/Box.js"></script>
+    </head>
+<body>
+    
+
+    
+      @using (Html.BeginForm("", "", FormMethod.Post,new { @id="myid"}))
+      {
+        <div id='TextBoxesGroup'>
+            <div id="TextBoxDiv1">
+                <label>Textbox #1 : </label><input type='text' name='textbox1'>
+            </div>
+        </div>
+        <input type="submit" class="submit">
+      }
+    <input type='button' value='Add Button' id='addButton'>
+
+    </body>
+
+</html>
