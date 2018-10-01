@@ -1,0 +1,80 @@
+﻿@using TaskManagement.Models;
+
+@{
+    Layout = null;
+    string ContentPath = System.Configuration.ConfigurationManager.AppSettings["contentpath"].ToString();
+    string error = ViewBag.task;
+}
+
+<html>
+
+<head>
+    <title>AssignAsanaTask</title>
+    <script src="@(ContentPath)/js/jquery-1.11.1.min.js"></script>
+    <script src="@(ContentPath)/js/jquery-ui-1.10.1.custom.min.js"></script>
+    <link rel="shortcut icon" href="@(ContentPath)/Images/ss_icon_new.ico" />
+    <link href="@(ContentPath)/css/AssignAsanaTask.css" rel="stylesheet" />
+    <script src="@(ContentPath)/js/Inputbox.js"></script>
+</head>
+<body style="background-color:#001940;">
+
+    <div style="margin-left:70px;margin-top:20px">
+        <img src="~/Content/images/Vinsconnect_logo.png" />
+        <span class="logout" style="float: right;margin-right: 52px;margin-top: 42px;font-family: Calibri;"><a href="../../login/Index" class="log_out" style="color:white;text-decoration:none;" onclick="fn_logout()">Logout</a></span>
+    </div>
+
+    <div style="margin-left:50px;margin-right:50px;background-color:white;margin-top:20px;padding:25px;">
+        <div style="font-weight:bold;font-size:25px;height:30px;box-sizing:border-box;font-family:Calibri;">
+            ASANA TASK
+            <input type="submit" style="float:right;margin-right:5px;padding:5px;font-size: 15px;" value="Submit" formaction="../Document/" />
+        </div>
+
+        <div style="margin-left:50px;margin-right:50px;background-color:white;margin-top:20px;padding:25px;">
+
+            @using (@Html.BeginForm("AssignAsanaTask", "Document", FormMethod.Post, new { id = "myid" }))
+            {
+                <div class="table">
+                    <div class="tr">
+                        <div class="td"> Enter Asana Id</div>
+                        <div class="td">Task Time Taken</div>
+                    </div>
+
+                    @for (int i = 0; i < 10; i++)
+                    {
+
+                        <div class="tr">
+                            <div class="td"><div id='TextBoxesGroup1'><div id="TextBoxDiv">@Html.TextBox("id", null, new { @class = "control" })</div></div></div>
+                            <div class="td"><div id='TextBoxesGroup2'><div id="TextBoxDiv">@Html.TextBox("time", null, new { @class = "control" })</div></div></div>
+                        </div>
+                        if (i == 9)
+                        {
+                            <div class="tr">
+                                <div class="td"><div id='TextBoxesGroup3'><div id="TextBoxDiv">@Html.TextBox("id", null, new { @class = "control" })</div></div></div>
+                                <div class="td"><div id='TextBoxesGroup4'><div id="TextBoxDiv">@Html.TextBox("time", null, new { @class = "control" })</div></div></div>
+                            </div>
+                        }
+                        @*<input type="hidden" value="@error" id="er">*@
+                    }
+                </div>
+                <input type="submit" style="float:right;margin-right:3px;padding:5px;font-size: 15px;" value="Submit" class="submit" />
+
+            }
+            <input type="button" style="float:right;margin-right:10px;margin-top:-16px;padding:5px;font-size: 15px;" value="Add Rows" id='addButton' class="AddRows" />
+
+
+        </div>
+
+
+    </div>
+
+    @if (error != null)
+    {
+        //errors();
+
+    }
+
+</body>
+
+
+
+</html>
