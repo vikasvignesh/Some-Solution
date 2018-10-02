@@ -1,0 +1,142 @@
+index
+---
+
+
+
+
+@{
+    Layout = null;
+    string error = ViewBag.task;
+}
+
+<html>
+
+<head>
+    <script src="~/Content/js/Inputbox.js"></script>
+    <script src="~/Content/js/jquery-1.11.1.min.js"></script>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link href="~/Content/cscs/AssignAsanaTask.css" rel="stylesheet" />
+</head>
+<body style="background-color:#001940;">
+
+    <div style="margin-left:70px;margin-top:20px">
+        <img src="~/Content/images/Vinsconnect_logo.png" />
+        <span class="logout" style="float: right;margin-right: 52px;margin-top: 42px;font-family: Calibri;"><a href="../../login/Index" class="log_out" style="color:white;text-decoration:none;" onclick="fn_logout()">Logout</a></span>
+    </div>
+
+    <div style="margin-left:50px;margin-right:50px;background-color:white;margin-top:20px;padding:25px;">
+        <div style="font-weight:bold;font-size:25px;height:30px;box-sizing:border-box;font-family:Calibri;">
+            ASANA TASK
+            <input type="submit" style="float:right;margin-right:5px;padding:5px;font-size: 15px;" value="Submit" formaction="../Document/" />
+        </div>
+
+        <div style="margin-left:50px;margin-right:50px;background-color:white;margin-top:20px;padding:25px;">
+
+            @using (@Html.BeginForm("AssignAsanaTask", "Document", FormMethod.Post, new { id = "myid" }))
+            {
+                <div>
+                    @for(int i = 0; i < 10; i++)
+                    {
+
+                        <div class="form-group row">
+                            <div class="col-md-4 col-md-offset-1">
+                                <h4>Enter Asana Id</h4>
+                                <input class="form-control" id="ex1" type="text" placeholder="Enter Asana Id">
+                            </div>
+                            <div class="col-md-4">
+                                <h4>Task Time Taken</h4>
+                                <div class="form-group">
+                                    <select class="form-control" id="sel1">
+                                        <option value="" disabled selected>Please Enter The Time</option>
+                                        <option>15 Min</option>
+                                        <option>30 Min</option>
+                                        <option>45 Min</option>
+                                        <option>60 Min</option>
+                                        <option>75 Min</option>
+                                        <option>90 Min</option>
+                                        <option>105 Min</option>
+                                        <option>120 Min</option>
+                                        <option>135 Min</option>
+                                        <option>150 Min</option>
+                                        <option>175 Min</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                    }
+                    </div>
+                    <input type="submit" style="float:right;margin-right:3px;padding:5px;font-size: 15px;" value="Submit" class="submit" />
+
+            }
+            <input type="button" style="float:right;margin-right:10px;margin-top:-16px;padding:5px;font-size: 15px;" value="Add Rows" id='addButton' class="AddRows" />
+        </div>
+
+
+    </div>
+
+
+</body>
+
+
+
+</html>
+
+
+
+
+-----
+
+css
+
+----
+
+
+    .table{
+    display:table;
+
+    width: 50%;
+    
+}
+.tr{
+    display:table-row;
+ 
+}
+.td{
+    display:table-cell;
+     height: 50px;
+}
+.control{
+    border-radius:3px;
+}
+
+  h3
+  {
+  text-align:center;
+  color:#001940;
+  }
+  form
+  {
+   margin-top:33px;
+   background:#dadfe1;
+  }
+  .submit
+  {
+ 
+    background: #00e640;
+    position: left;
+    position: relative;
+    left: 116px;
+    top: 30px;
+    padding: 7px;
+  }
+  .submit:hover
+  {
+     background:#27ae60;
+  }
