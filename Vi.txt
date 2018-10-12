@@ -1,0 +1,127 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.Mvc;
+using Task1.Models;
+using System.Data.SqlClient;
+using System.Configuration;
+namespace Task1.Controllers
+{
+    public class HomeController : Controller
+    {
+        // GET: Home
+        public ActionResult Index(UserLogin ul)
+        {
+            if ((ul.Password!=null)&&(ul.Password.Equals("vinayak"))){
+                return RedirectToAction("DataTable");
+            }
+            else { 
+            return View();
+            }
+        }
+        [HttpPost]
+        public ActionResult Index(string SelectTime)
+        {
+            return RedirectToAction("DataTable");
+        }
+        public ActionResult DataTable()
+        {
+            employee emp;
+            String st = ConfigurationManager.ConnectionStrings["conn"].ToString();
+            SqlConnection sql = new SqlConnection(st);
+            sql.Open();
+            SqlCommand cmd = new SqlCommand("select * from employee", sql);
+            SqlDataReader dr = cmd.ExecuteReader();
+            List<employee> li = new List<employee>();
+            while (dr.Read())
+            {
+                int x = Convert.ToInt32(dr[0]);
+                emp = new employee();
+                emp.Id = x;
+                emp.Firstname = (String)dr["firstname"];
+                emp.Lastname = (String)dr["lastname"];
+                emp.Middlename = (String)dr["middlename"];
+                emp.DOB = (DateTime)dr["dob"];
+                emp.Salary = (String)dr["salary"];
+                emp.Email = (String)dr["email"];
+                emp.Address = (String)dr["addres"];
+                emp.City = (String)dr["city"];
+                emp.State = (String)dr["stat"];
+                emp.Country = (String)dr["country"];
+                emp.Status = Convert.ToBoolean(dr["stats"]);
+                li.Add(emp);
+            }
+            sql.Close();
+            ViewBag.send = li;
+            return View("DataTable");
+        }
+        public ActionResult Index1()
+        {
+            return View("Index2");
+        }
+        [HttpPost]
+        public ActionResult Index2(employee emp)
+        {
+            String s = ConfigurationManager.ConnectionStrings["conn"].ToString();
+            SqlConnection sql = new SqlConnection(s);
+            sql.Open();
+            String query = "insert into employee values(@firstname,@lastname,@middlename,@dob,@salary,@email,@address,@city,@state,@country,@status)";
+            SqlCommand cmd = new SqlCommand();
+            cmd.Parameters.Add(new SqlParameter("@firstname", emp.Firstname));
+            cmd.Parameters.Add(new SqlParameter("@lastname", emp.Lastname));
+            cmd.Parameters.Add(new SqlParameter("@middlename", emp.Middlename));
+            cmd.Parameters.Add(new SqlParameter("@dob", emp.DOB));
+            cmd.Parameters.Add(new SqlParameter("@salary", emp.Salary));
+            cmd.Parameters.Add(new SqlParameter("@email", emp.Email));
+            cmd.Parameters.Add(new SqlParameter("@address", emp.Address));
+            cmd.Parameters.Add(new SqlParameter("@city", emp.City));
+            cmd.Parameters.Add(new SqlParameter("@state", emp.State));
+            cmd.Parameters.Add(new SqlParameter("@country", emp.Country));
+            cmd.Parameters.Add(new SqlParameter("@status", Request.Form["status"]));
+            cmd.CommandText = query;
+            cmd.Connection = sql;
+            cmd.ExecuteNonQuery();
+            sql.Close();
+            return RedirectToAction("DataTable");
+        }
+    }
+}
+
+
+------------view
+
+
+
+@{
+    ViewBag.Title = "Index2";
+}
+
+<form method="post" action="/Home/Index2">
+    Enter Id:
+    <input type="text" name="Id"><br>
+    Enter Firstname:
+    <input type="text" name="Firstname"><br>
+    Enter Lastname:
+    <input type="text" name="Lastname"><br>
+    Enter IMiddleName:
+    <input type="text" name="Middlename"><br>
+    Enter DOB:
+    <input type="text" name="DOB"><br>
+    Enter Salary:
+    <input type="text" name="Salary"><br>
+    Enter Email:
+    <input type="text" name="Email"><br>
+    Enter Address:
+    <input type="text" name="Address"><br>
+    Enter City:
+    <input type="text" name="City"><br>
+    Enter State:
+    <input type="text" name="State"><br>
+    Enter COuntry:
+    <input type="text" name="Country"><br>
+    Enter State:
+    <input type="text" name="Status"><br>
+    <input type="submit" value="add">
+</form>
+
