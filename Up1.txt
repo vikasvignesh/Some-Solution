@@ -1,308 +1,46 @@
-@using Seq.App.Asana;
-@{
-    Layout = null;
-    string ContentPath = System.Configuration.ConfigurationManager.AppSettings["contentpath"].ToString();
-    Datum tag = ViewBag.details;
-    string error = ViewBag.error;
-    List<string> link = ViewBag.Link;
-    string assigned = "";
-    string comments = "";
-    if (tag != null)
-    {
-        assigned = tag.tags.Count > 0 ? tag.tags[0].name : "";
-        if (tag.completed == true && assigned != "")
-        {
-            comments = "completed";
-        }
-        else if (assigned != null)
-        {
-            comments = "assigned ";
-        }
-    }
-
-
-
-}
-
 <html>
 <head>
-    <title>CheckTaskDetails</title>
-
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <script src="@(ContentPath)/js/jquery-1.11.1.min.js"></script>
-    <link rel="shortcut icon" href="@(ContentPath)/Images/ss_icon_new.ico" />
-    <link href="@(ContentPath)/css/bootstrap.min.css" rel="stylesheet" />
-    <script src="@(ContentPath)/js/bootstrap.min.js"></script>
-    <link href="@(ContentPath)/css/TaskDetails.css" rel="stylesheet" />
-
-</head>
-
-
-<body style="background-color:#001940;">
-
-    <div style="margin-left:70px;margin-top:20px">
-        <img src="~/Content/images/Vinsconnect_logo.png" />
-        <span class="logout" style="float: right;margin-right: 52px;margin-top: 42px;font-family: Calibri;"><span style="color:white;text-decoration:none;">@ViewBag.user</span>  </span>
-    </div>
-    <div style="margin-left:50px;margin-right:50px;background-color:white;margin-top:20px;padding:25px;" id="bdy">
-        <form id="form" method="post">
-            <div style="font-weight:bold;font-size:25px;height:30px;box-sizing:border-box;font-family:Calibri;">
-                CheckTaskDetails
-                <input type="submit" style="float:right;margin-right:5px;padding:5px;font-size: 15px;" value="Back To Main Page" formaction="../ManageTask/Home" />
-            </div>      
-        </form>
-        <br>
-        
-
-        @using (@Html.BeginForm("CheckTaskDetails", "ManageTask", FormMethod.Post, new { id = "myid" }))
-            {
-            <div class="searchthis">
-                <input id="namanyay-search-box" name="AsanaTaskId" size="40" type="text" placeholder="Enter Asana Task Id" />
-                <input id="namanyay-search-btn" value="Get Detail" type="submit" />
-            </div>
-        }
-        @*TaskName = tag.name, Description = tag.notes, Project = tag.projects[0].name, AssignedTo = assigned, ETA = Math.Round(float.Parse(asana.Value.ToString().Replace(':', '.')), 2),
-             Assigned = asana.Value, tag.created_at, Completed = tag.completed_at, Status = tag.custom_fields[1].enum_value.name, Task = tag.custom_fields[0].number_value,
-            Priority = tag.custom_fields[3].enum_value.name, Comments = comments, AsanaTaskId = asana.Key.ToString()*@
-        <div class="dyna">
-        @if (tag != null)
-            {
-            <table class="flat-table">
-                <tr>
-                    <th class="hd">TaskName</th>
-                    @if (tag.name != null)
-                    {
-                        <td>@tag.name</td>
-                    }
-                    else
-                    {
-                        <td></td>
-                    }
-
-                </tr>
-                <tr>
-                    <th class="hd"> </th>
-                    <td></td>
-                 </tr>
-                <tr>
-                    <td class="hd">Description</td>
-                    @if (tag.notes != null)
-                    {
-                        <td>@tag.notes</td>
-                    }
-                    else
-                    {
-                        <td></td>
-                    }
-                </tr>
-                <tr>
-                    <td class="hd">Source</td>
-                    <td>From Asana</td>
-                </tr>
-                <tr>
-                    <td class="hd">Project</td>
-                    @if (tag.projects[0].name != null)
-                    {
-                        <td>@tag.projects[0].name</td>
-                    }
-                    else
-                    {
-                        <td></td>
-                    }
-                </tr>
-                <tr>
-                    <td class="hd">AssignedTo</td>
-                    @if (tag.tags.Count > 0)
-                    {
-                        <td>@tag.tags[0].name</td>
-                    }
-                    else
-                    {
-                        <td>Not Assigned</td>
-                    }
-
-
-                </tr>
-                <tr>
-                    <td class="hd">AssignedOn</td>
-                    <td>@tag.created_at</td>
-                </tr>
-                <tr>
-                    <td class="hd">DueDate</td>
-                    <td>@tag.due_on</td>
-                </tr>
-                <tr>
-                    <td class="hd">CompletedOn</td>
-                    <td>@tag.completed_at</td>
-                </tr>
-                <tr>
-                    <td class="hd">Status</td>
-                    @if (tag.custom_fields != null && tag.custom_fields[1] != null && tag.custom_fields[1].enum_value != null)
-                    {
-                        <td>@tag.custom_fields[1].enum_value.name</td>
-                    }
-                    else
-                    {
-                        <td></td>
-                    }
-                </tr>
-                <tr>
-                    <td class="hd">TaskId</td>
-                    @if (tag.custom_fields != null && tag.custom_fields[0].number_value != null)
-                    {
-                        <td>@tag.custom_fields[0].number_value</td>
-                    }
-                    else
-                    {
-                        <td></td>
-                    }
-                </tr>
-                <tr>
-                    <td class="hd">Priority</td>
-                    @if (tag.custom_fields != null && tag.custom_fields[3] != null && tag.custom_fields[3].enum_value != null)
-                    {
-                        <td>@tag.custom_fields[3].enum_value.name</td>
-                    }
-                    else
-                    {
-                        <td></td>
-                    }
-
-                </tr>
-                <tr>
-                    <td class="hd">Type</td>
-                    @if (tag.resource_type != null)
-                    {
-                        <td>@tag.resource_type</td>
-                    }
-                    else
-                    {
-                        <td></td>
-                    }
-                </tr>
-                <tr>
-                    <td class="hd">Comments</td>
-                    <td>@comments</td>
-                </tr>
-                <tr>
-                    <td class="hd">ImageLink</td>
-                    <td>
-                        @foreach (string imglink in link)
-                        {
-                            if (imglink != null)
-                            {
-                                <a href="@imglink" target="_blank">Link ,</a>
-                            }
-
-                        }
-                    </td>
-                </tr>
-                <tr>
-                    <td class="hd">AsanaTaskId</td>
-                    @if (@tag.id != null)
-                    {
-                        <td>@tag.id</td>
-                    }
-                    else
-                    {
-                        <td></td>
-                    }
-                </tr>
-
-            </table>
-        }
-        else if (error != null)
-        {
-            <table class="flat-table">
-                <tbody>
-                    <tr>
-                        <td class="hd">Not Found</td>
-                        <td>AsanaTaskId: @error</td>
-                    </tr>
-                </tbody>
-            </table>
-        }
-            </div>
-    </div>
-</body>
-</html>
-
-
-
--------------
-
-*{
-padding:0px;
-margin:0px;
-font-family:"Calibri";
+<style>
+.flat-table{
+display: table;
+	width: auto;
 }
-#msg{
-    width:251px;
+.tr{
+display: table-row;
 }
-/* search input*/
-
-.searchthis {
-  text-align: center;
-}
-
-#namanyay-search-btn {
-background:#00b56a;
-color:white;
-font: 'trebuchet ms', trebuchet;
-padding:10px 20px;
-border-radius:0 5px 5px 0;
--moz-border-radius:0 5px 5px 0;
--webkit-border-radius:0 5px 5px 0;
--o-border-radius:0 5px 5px 0;
-border:0 none;
-font-weight:bold;
-
-}
- 
-#namanyay-search-box {
-background: #eee;
-padding:10px;
- border-radius:5px 0 0 5px;
--moz-border-radius:5px 0 0 5px;
--webkit-border-radius:5px 0 0 5px;
--o-border-radius:5px 0 0 5px;
-border:0 none;
-width:220px;
- }
-#{
-    margin:0px auto;
-}
-.flat-table {
-    width: 450px;
-    margin: 30px auto;
-    -webkit-font-smoothing: antialiased;
-    font-size: 110%;
-    overflow: auto;
-    border-collapse: collapse;
-  
-} 
- .hd {
-    background-color: rgb(0, 181, 106);
+.hd{
+display: table-header-group;
+background-color: rgb(0, 181, 106);
     color: white;
     font-weight: normal;
     padding: 10px 30px;
     text-align: center;
-  }
-  td {
-    background-color: rgb(238, 238, 238);
+}
+.td{
+background-color: rgb(238, 238, 238);
     color: rgb(111, 111, 111);
-    padding: 0px 30px;
-  }
+    padding: 10px 30px;
+}
 
-  input[type=submit]
-  {
-          color: white;
-          border: 0px;
-          background-color: #4CAF50;
-  }
-th {
-    height:15px;
-}
-#bdy{
-    min-height:500px;
-}
+.hd,tr{display: table-cell;
+	padding: 3px 10px;
+	}
+</style>
+</head>
+<body>
+<div class="flat-table">
+                <div class="tr">
+                    <div class="hd">TaskName</div>
+                        <div class="td">@tag.name</div>
+                </div>
+                <div class="tr">
+                    <div class="hd">a </div>
+                    <div class="td">@tag.name</div>
+                 </div>
+                <div class="tr">
+				<div class="hd"> dsvs</div>
+                    <div class="td">@tag.name</div>
+                </div>
+				</div>
+				</body>
+				</html>
