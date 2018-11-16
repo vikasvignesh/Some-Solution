@@ -1,142 +1,56 @@
-index
----
+<section>
 
+            <a target="_blank" href=@path class="ahref">
+                <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                     viewBox="0 0 50 60" enable-background="new 0 0 50 60" xml:space="preserve" class="exportimg">
+                <polygon fill-rule="evenodd" clip-rule="evenodd" fill="#8F90D6" points="31,0 50,19 31,19 " />
+                <polygon fill-rule="evenodd" clip-rule="evenodd" fill="#373895" points="0,0 31,0 31,19 50,19 50,60 0,60 " />
+                <path fill="#FFFFFF" d="M30.7,42l2.3-0.3c0.3,1.8,1.1,2.7,2.6,2.7c0.7,0,1.3-0.2,1.7-0.6c0.4-0.4,0.6-0.8,0.6-1.4
+	        c0-0.3-0.1-0.6-0.2-0.8c-0.1-0.2-0.4-0.4-0.7-0.6c-0.3-0.1-1-0.4-2.1-0.7c-1-0.3-1.8-0.6-2.2-1c-0.5-0.4-0.8-0.8-1.1-1.4
+	        c-0.3-0.6-0.4-1.2-0.4-1.9c0-0.8,0.2-1.5,0.5-2.1c0.4-0.6,0.8-1.1,1.5-1.4c0.6-0.3,1.4-0.5,2.3-0.5c1.4,0,2.5,0.4,3.2,1.1
+	        c0.8,0.7,1.2,1.8,1.2,3.2l-2.4,0.1c-0.1-0.8-0.3-1.3-0.7-1.6c-0.3-0.3-0.8-0.5-1.5-0.5c-0.6,0-1.1,0.1-1.5,0.4
+	        c-0.3,0.3-0.5,0.6-0.5,1c0,0.4,0.2,0.7,0.5,1c0.3,0.3,1,0.6,2.2,0.9c1.2,0.3,2.1,0.7,2.6,1.1c0.5,0.4,0.9,0.9,1.2,1.5
+	        c0.3,0.6,0.4,1.3,0.4,2.2c0,1.2-0.4,2.3-1.1,3.1c-0.8,0.8-2,1.3-3.6,1.3C32.6,46.9,31,45.3,30.7,42 M21.6,46.7V32.5H24v11.8h5.9v2.4
+	        H21.6z M9.7,46.7l4-7.5l-3.6-6.8h2.8l2.4,4.6l2.3-4.6h2.7l-3.6,7l4,7.4h-2.9l-2.6-5l-2.6,5H9.7z" />
+        </svg>
+                
+            </a>
 
+            <div class="tbl-header">
+                <table cellpadding="0" cellspacing="0" border="0">
+                    <thead>
+                        <tr>
+                            <th class="box">Task Id</th>
+                            <th class="bname" id="iname">Task Name</th>
+                            <th class="bproject">Project</th>
+                            <th class="box">ETA</th>
+                            <th class="box">Type</th>
+                            <th class="box">Priority</th>
+                            <th class="box">Impact</th>
+                            <th>Bug Type</th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
 
+            <div class="tbl-content">
+                <table cellpadding="0" cellspacing="0" border="0">
+                    <tbody>
+                        @foreach (DisplayTask task in tasks)
+                        {
+                            <tr>
+                                <td class="box">@task.AccountProjectTaskId</td>
+                                <td class="bname">@task.TaskName </td>
+                                <td class="bproject">@task.AsanaProjectName</td>
+                                <td class="box">@task.Duration</td>
+                                <td class="box">@task.TaskType</td>
+                                <td class="box">@task.Priority</td>
+                                <td class="box">@task.AsanaImpact</td>
+                                <td>@task.Classification</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
 
-@{
-    Layout = null;
-    string error = ViewBag.task;
-}
-
-<html>
-
-<head>
-    <script src="~/Content/js/Inputbox.js"></script>
-    <script src="~/Content/js/jquery-1.11.1.min.js"></script>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <link href="~/Content/cscs/AssignAsanaTask.css" rel="stylesheet" />
-</head>
-<body style="background-color:#001940;">
-
-    <div style="margin-left:70px;margin-top:20px">
-        <img src="~/Content/images/Vinsconnect_logo.png" />
-        <span class="logout" style="float: right;margin-right: 52px;margin-top: 42px;font-family: Calibri;"><a href="../../login/Index" class="log_out" style="color:white;text-decoration:none;" onclick="fn_logout()">Logout</a></span>
-    </div>
-
-    <div style="margin-left:50px;margin-right:50px;background-color:white;margin-top:20px;padding:25px;">
-        <div style="font-weight:bold;font-size:25px;height:30px;box-sizing:border-box;font-family:Calibri;">
-            ASANA TASK
-            <input type="submit" style="float:right;margin-right:5px;padding:5px;font-size: 15px;" value="Submit" formaction="../Document/" />
-        </div>
-
-        <div style="margin-left:50px;margin-right:50px;background-color:white;margin-top:20px;padding:25px;">
-
-            @using (@Html.BeginForm("AssignAsanaTask", "Document", FormMethod.Post, new { id = "myid" }))
-            {
-                <div>
-                    @for(int i = 0; i < 10; i++)
-                    {
-
-                        <div class="form-group row">
-                            <div class="col-md-4 col-md-offset-1">
-                                <h4>Enter Asana Id</h4>
-                                <input class="form-control" id="ex1" type="text" placeholder="Enter Asana Id">
-                            </div>
-                            <div class="col-md-4">
-                                <h4>Task Time Taken</h4>
-                                <div class="form-group">
-                                    <select class="form-control" id="sel1">
-                                        <option value="" disabled selected>Please Enter The Time</option>
-                                        <option>15 Min</option>
-                                        <option>30 Min</option>
-                                        <option>45 Min</option>
-                                        <option>60 Min</option>
-                                        <option>75 Min</option>
-                                        <option>90 Min</option>
-                                        <option>105 Min</option>
-                                        <option>120 Min</option>
-                                        <option>135 Min</option>
-                                        <option>150 Min</option>
-                                        <option>175 Min</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-
-
-
-                    }
-                    </div>
-                    <input type="submit" style="float:right;margin-right:3px;padding:5px;font-size: 15px;" value="Submit" class="submit" />
-
-            }
-            <input type="button" style="float:right;margin-right:10px;margin-top:-16px;padding:5px;font-size: 15px;" value="Add Rows" id='addButton' class="AddRows" />
-        </div>
-
-
-    </div>
-
-
-</body>
-
-
-
-</html>
-
-
-
-
------
-
-css
-
-----
-
-
-    .table{
-    display:table;
-
-    width: 50%;
-    
-}
-.tr{
-    display:table-row;
- 
-}
-.td{
-    display:table-cell;
-     height: 50px;
-}
-.control{
-    border-radius:3px;
-}
-
-  h3
-  {
-  text-align:center;
-  color:#001940;
-  }
-  form
-  {
-   margin-top:33px;
-   background:#dadfe1;
-  }
-  .submit
-  {
- 
-    background: #00e640;
-    position: left;
-    position: relative;
-    left: 116px;
-    top: 30px;
-    padding: 7px;
-  }
-  .submit:hover
-  {
-     background:#27ae60;
-  }
+        </section>
