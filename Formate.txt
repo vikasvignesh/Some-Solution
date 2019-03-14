@@ -1,0 +1,35 @@
+ public static T GetConfigSetting<T>(string key)
+        {
+            T data = default(T);
+
+            if (ConfigurationManager.AppSettings[key] != null && !String.IsNullOrEmpty(ConfigurationManager.AppSettings[key].ToString()))
+            {
+                object val = ConfigurationManager.AppSettings[key]; 
+
+                try
+                {
+                    if (val != null)
+                    {
+                        data = (T)Convert.ChangeType(val, typeof(T));
+                    }
+                }
+                catch (Exception e)
+                {
+                    throw new Exception("Unable to parse configuration setting.", e);
+                    //StringBuilder text = new StringBuilder();
+                    //text.AppendLine(e.Message);
+                    //text.AppendLine(e.StackTrace);
+                    //LookupService.DispatchMail("Error occurred in Innova indexing at " + DateTime.Now.ToString(), text);
+                }
+            }
+
+            return data;
+        }
+
+ IndexSetup = GetConfigSetting<String>("IndexSetup");
+
+ -----
+
+  conn.Execute(query, new { id=Article.Id});
+
+   List<class> Article = conn.Query<class>(query).ToList();
